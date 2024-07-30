@@ -1,0 +1,72 @@
+syntax = "proto3";
+package CudoVentures.cudosnode.mail;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "mail/params.proto";
+// this line is used by starport scaffolding # 1
+import "mail/mail.proto";
+
+option go_package = "github.com/CudoVentures/cudos-node/x/mail/types";
+
+// Query defines the gRPC querier service.
+service Query {
+	// Parameters queries the parameters of the module.
+	rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+	  option (google.api.http).get = "/CudoVentures/cudosnode/mail/params";
+	}
+	// Queries a Mail by id.
+	rpc Mail(QueryGetMailRequest) returns (QueryGetMailResponse) {
+		option (google.api.http).get = "/CudoVentures/cudosnode/mail/mail/{id}";
+	}	
+	// Queries a list of Mail items.
+	rpc MailAll(QueryAllMailRequest) returns (QueryAllMailResponse) {
+		option (google.api.http).get = "/CudoVentures/cudosnode/mail/mail";
+	}
+
+	// Queries a list of AccountMails items.
+	rpc AccountMails(QueryAccountMailsRequest) returns (QueryAccountMailsResponse) {
+		option (google.api.http).get = "/CudoVentures/cudosnode/mail/account_mails/{address}";
+	}
+
+// this line is used by starport scaffolding # 2
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetMailRequest {
+	uint64 id = 1;
+}
+
+message QueryGetMailResponse {
+	Mail Mail = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllMailRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllMailResponse {
+	repeated Mail Mail = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryAccountMailsRequest {
+	string address = 1;
+	cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryAccountMailsResponse {
+	repeated Mail mail = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// this line is used by starport scaffolding # 3

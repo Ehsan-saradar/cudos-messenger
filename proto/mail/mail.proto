@@ -1,0 +1,13 @@
+syntax = "proto3";
+package CudoVentures.cudosnode.mail;
+
+option go_package = "github.com/CudoVentures/cudos-node/x/mail/types";
+
+message Mail {
+  uint64 id = 1;
+  string from = 2; 
+  string to = 3; 
+  string subject = 4; 
+  string body = 5; 
+  int64 createdAtHeight = 6; 
+}
